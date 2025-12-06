@@ -34,7 +34,6 @@
                 padding: 15px;
             }
             
-            /* Specific layout for portrait */
             .logo-container {
                 grid-column: 1 / span 2;
                 text-align: center;
@@ -74,7 +73,10 @@
             }
         }
 
-        /* Landscape (Desktop/TV) Layout - 10:16 ratio */
+        /* ----------------------------- */
+        /* FIXED LANDSCAPE LAYOUT BELOW */
+        /* ----------------------------- */
+
         @media (orientation: landscape) {
             .grid {
                 display: grid;
@@ -84,17 +86,8 @@
                 height: 90vh;
                 padding: 20px;
             }
-            
-            /* Top row: B C A E F */
-            .logo-container {
-                grid-column: 9 / span 2;
-                grid-row: 1;
-                text-align: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
+
+            /* B: Profile Picture */
             .profile-container {
                 grid-column: 1 / span 3;
                 grid-row: 1;
@@ -103,7 +96,8 @@
                 flex-direction: column;
                 justify-content: center;
             }
-            
+
+            /* C: Employee Info */
             .info-container {
                 grid-column: 4 / span 4;
                 grid-row: 1;
@@ -112,23 +106,38 @@
                 justify-content: center;
                 padding-left: 20px;
             }
-            
+
+            /* A: LOGO — centered */
+            .logo-container {
+                grid-column: 8 / span 2;
+                grid-row: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* E + F: Total & Remaining Points (right aligned) */
             .points-container {
                 grid-column: 11 / span 6;
                 grid-row: 1;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-gap: 10px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 15px;
             }
-            
-            /* Marquee row */
+
+            .total-point, .remaining-point {
+                width: 100%;
+            }
+
+            /* Marquee */
             .marquee-container {
                 grid-column: 1 / span 16;
                 grid-row: 2;
                 margin: 10px 0;
             }
-            
-            /* Bottom buttons */
+
+            /* Buttons (prize area fully shown) */
             .buttons-container {
                 grid-column: 1 / span 16;
                 grid-row: 3 / span 8;
@@ -260,44 +269,26 @@
             color: #333;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .name {
-                font-size: 2em;
-            }
-            
-            .point-value {
-                font-size: 2em;
-            }
-            
-            .button {
-                padding: 15px;
-                font-size: 1em;
-            }
+            .name { font-size: 2em; }
+            .point-value { font-size: 2em; }
+            .button { padding: 15px; font-size: 1em; }
         }
 
         @media (max-width: 480px) {
-            .name {
-                font-size: 1.8em;
-            }
-            
-            .profile-pic {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .button {
-                padding: 12px;
-                font-size: 0.9em;
-            }
+            .name { font-size: 1.8em; }
+            .profile-pic { width: 100px; height: 100px; }
+            .button { padding: 12px; font-size: 0.9em; }
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Spinner -->
     <div id="loading" class="loading">Loading...</div>
 
     <div class="container">
+
         <!-- Hidden Forms for GAS Communication -->
         <form id="getPointsForm" class="hidden-form" action="https://script.google.com/macros/s/AKfycby27kfUz5aafx4_gdgQ64sv7Ng-cmpo50JlfU-KtTgPtj5hSuxPShKws-xhJ1rmLRYxlQ/exec" method="GET">
             <input type="hidden" name="action" value="getPoints">
@@ -311,6 +302,7 @@
         </form>
 
         <div class="grid">
+
             <!-- A: HL Logo -->
             <div class="logo-container card">
                 <img src="" alt="HL Logo" class="logo">
@@ -337,93 +329,60 @@
                 </div>
             </div>
 
-            <!-- E: Total Point -->
-            <div class="point-card card total-point">
-                <div class="point-label">Total Point</div>
-                <div class="point-value" id="totalPoint">0</div>
-            </div>
+            <!-- E + F Group Wrapper (added but non-breaking) -->
+            <div class="points-container">
+                <!-- E: Total Point -->
+                <div class="point-card card total-point">
+                    <div class="point-label">Total Point</div>
+                    <div class="point-value" id="totalPoint">0</div>
+                </div>
 
-            <!-- F: Remaining Point -->
-            <div class="point-card card remaining-point">
-                <div class="point-label">Remaining Point</div>
-                <div class="point-value" id="remainingPoint">0</div>
+                <!-- F: Remaining Point -->
+                <div class="point-card card remaining-point">
+                    <div class="point-label">Remaining Point</div>
+                    <div class="point-value" id="remainingPoint">0</div>
+                </div>
             </div>
 
             <!-- Buttons Section -->
             <div class="buttons-container">
-                <!-- G: View Ranking -->
-                <button class="button" onclick="viewRanking()">
-                    View Ranking
-                </button>
-
-                <!-- H: Redeem Reward -->
-                <button class="button" onclick="window.open('https://hl-steel-industries-sdn-bhd.github.io/Redeem-html-test5/', '_blank')">
-                    Redeem Reward
-                </button>
-
-                <!-- I: Off-site Work Record -->
-                <button class="button" onclick="window.open('https://hl-steel-industries-sdn-bhd.github.io/Off-Site-Work-Record/', '_blank')">
-                    Off-site Work Record
-                </button>
-
-                <!-- J: Submit Contribution -->
-                <button class="button" onclick="submitContribution()">
-                    Submit Contribution
-                </button>
-
-                <!-- K: Work Schedule -->
-                <button class="button" onclick="viewSchedule()">
-                    Work Schedule
-                </button>
-
-                <!-- L: Submit QC Report -->
-                <button class="button" onclick="submitQC()">
-                    Submit QC Report
-                </button>
-
-                <!-- M: Bounty Task -->
-                <button class="button" onclick="viewBounty()">
-                    Bounty Task
-                </button>
-
-                <!-- N: Edit Profile -->
-                <button class="button" onclick="editProfile()">
-                    Edit Profile
-                </button>
+                <button class="button" onclick="viewRanking()">View Ranking</button>
+                <button class="button" onclick="window.open('https://hl-steel-industries-sdn-bhd.github.io/Redeem-html-test5/', '_blank')">Redeem Reward</button>
+                <button class="button" onclick="window.open('https://hl-steel-industries-sdn-bhd.github.io/Off-Site-Work-Record/', '_blank')">Off-site Work Record</button>
+                <button class="button" onclick="submitContribution()">Submit Contribution</button>
+                <button class="button" onclick="viewSchedule()">Work Schedule</button>
+                <button class="button" onclick="submitQC()">Submit QC Report</button>
+                <button class="button" onclick="viewBounty()">Bounty Task</button>
+                <button class="button" onclick="editProfile()">Edit Profile</button>
             </div>
+
         </div>
     </div>
 
     <script>
-        // Configuration - These values need to be changed for each employee
         const CONFIG = {
-            employeeName: 'Albert', // Change this for each employee
-            department: 'Production', // Change this
-            position: 'Assistant Supervisor', // Change this
+            employeeName: 'Albert',
+            department: 'Production',
+            position: 'Assistant Supervisor',
             profilePicture: '',
-            gasWebAppUrl: 'https://script.google.com/macros/s/AKfycby27kfUz5aafx4_gdgQ64sv7Ng-cmpo50JlfU-KtTgPtj5hSuxPShKws-xhJ1rmLRYxlQ/exec' // Your GAS Web App URL
+            gasWebAppUrl: 'https://script.google.com/macros/s/AKfycby27kfUz5aafx4_gdgQ64sv7Ng-cmpo50JlfU-KtTgPtj5hSuxPShKws-xhJ1rmLRYxlQ/exec'
         };
 
-        // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            // Set employee info from config
             document.getElementById('employeeNameDisplay').textContent = CONFIG.employeeName;
             document.querySelector('.department').textContent = 'Department: ' + CONFIG.department;
             document.querySelector('.position').textContent = 'Position: ' + CONFIG.position;
             document.querySelector('.profile-pic').src = CONFIG.profilePicture;
             document.getElementById('employeeName').value = CONFIG.employeeName;
             document.getElementById('updateName').value = CONFIG.employeeName;
-            
-            // Get points from GAS
+
             getPointsFromGAS();
-            
-            // Hide loading after 1 second
+
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
             }, 1000);
         });
 
-        // Function to get points from Google Apps Script
         function getPointsFromGAS() {
             const form = document.getElementById('getPointsForm');
             if (CONFIG.gasWebAppUrl !== 'https://script.google.com/macros/s/AKfycby27kfUz5aafx4_gdgQ64sv7Ng-cmpo50JlfU-KtTgPtj5hSuxPShKws-xhJ1rmLRYxlQ/exec') {
@@ -432,7 +391,6 @@
             }
         }
 
-        // Function to handle GAS response via GET
         function handleGASResponse() {
             const urlParams = new URLSearchParams(window.location.search);
             const totalPoint = urlParams.get('totalPoint');
@@ -441,50 +399,25 @@
             if (totalPoint && remainingPoint) {
                 document.getElementById('totalPoint').textContent = parseInt(totalPoint).toLocaleString();
                 document.getElementById('remainingPoint').textContent = parseInt(remainingPoint).toLocaleString();
-                
-                // Clean URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
         }
-
-        // Call this function when page loads
         handleGASResponse();
 
-        // Function to redirect to redeem page
         function redirectToRedeem() {
             const remainingPoints = document.getElementById('remainingPoint').textContent.replace(/,/g, '');
             const url = `https://hl-steel-industries-sdn-bhd.github.io/Redeem-html-test2/?returnUrl=${encodeURIComponent(window.location.href)}&name=${encodeURIComponent(CONFIG.employeeName)}&points=${remainingPoints}`;
             window.location.href = url;
         }
 
-        // Placeholder functions for other buttons
-        function viewRanking() {
-            alert('View Ranking feature coming soon!');
-        }
+        function viewRanking() { alert('View Ranking feature coming soon!'); }
+        function submitContribution() { alert('Submit Contribution feature coming soon!'); }
+        function viewSchedule() { alert('Work Schedule feature coming soon!'); }
+        function submitQC() { alert('Submit QC Report feature coming soon!'); }
+        function viewBounty() { alert('Bounty Task feature coming soon!'); }
+        function editProfile() { alert('Edit Profile feature coming soon!'); }
 
-        function submitContribution() {
-            alert('Submit Contribution feature coming soon!');
-        }
-
-        function viewSchedule() {
-            alert('Work Schedule feature coming soon!');
-        }
-
-        function submitQC() {
-            alert('Submit QC Report feature coming soon!');
-        }
-
-        function viewBounty() {
-            alert('Bounty Task feature coming soon!');
-        }
-
-        function editProfile() {
-            alert('Edit Profile feature coming soon!');
-        }
-
-        // Handle orientation change
         window.addEventListener('orientationchange', function() {
-            // Force reflow to update layout
             document.body.style.display = 'none';
             document.body.offsetHeight;
             document.body.style.display = 'block';
