@@ -57,12 +57,17 @@
                 margin: 15px 0;
             }
             
+            /* --- 修改点 1: 左右排列 Total / Remaining --- */
             .points-container {
                 grid-column: 1 / span 2;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-gap: 15px;
+                display: flex;
+                justify-content: space-between;
                 margin: 15px 0;
+            }
+
+            .point-box {
+                width: 48%;
+                text-align: center;
             }
             
             .buttons-container {
@@ -224,6 +229,11 @@
             color: #e74c3c;
         }
 
+        /* --- 修改点 2: Total / Point 拆成两行 --- */
+        .point-label div {
+            line-height: 1.2em;
+        }
+
         .button {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
@@ -329,17 +339,17 @@
                 </div>
             </div>
 
-            <!-- E + F Group Wrapper (added but non-breaking) -->
+            <!-- E + F Group Wrapper -->
             <div class="points-container">
                 <!-- E: Total Point -->
-                <div class="point-card card total-point">
-                    <div class="point-label">Total Point</div>
+                <div class="point-card card total-point point-box">
+                    <div class="point-label"><div>Total</div><div>Point</div></div>
                     <div class="point-value" id="totalPoint">0</div>
                 </div>
 
                 <!-- F: Remaining Point -->
-                <div class="point-card card remaining-point">
-                    <div class="point-label">Remaining Point</div>
+                <div class="point-card card remaining-point point-box">
+                    <div class="point-label"><div>Remaining</div><div>Point</div></div>
                     <div class="point-value" id="remainingPoint">0</div>
                 </div>
             </div>
